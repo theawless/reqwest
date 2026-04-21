@@ -193,6 +193,7 @@
 //! - **default-tls** *(enabled by default)*: Provides TLS support to connect
 //!   over HTTPS.
 //! - **rustls**: Enables TLS functionality provided by `rustls`.
+//!   Uses `rustls-platform-verifier` for certificate verification by default.
 //! - **rustls-no-provider**: Enables TLS provided by `rustls` without specifying a crypto provider.
 //! - **native-tls**: Enables TLS functionality provided by `native-tls`.
 //! - **native-tls-vendored**: Enables the `vendored` feature of `native-tls`.

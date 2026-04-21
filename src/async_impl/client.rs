@@ -748,6 +748,8 @@ impl ClientBuilder {
                             ));
                         }
 
+                        #[cfg(feature = "__rustls-platform-verifier")]
+                        {
                         let verifier = if config.root_certs.is_empty() {
                             rustls_platform_verifier::Verifier::new(provider.clone())
                                 .map_err(crate::error::builder)?
@@ -776,6 +778,12 @@ impl ClientBuilder {
                         config_builder
                             .dangerous()
                             .with_custom_certificate_verifier(Arc::new(verifier))
+                        }
+
+                        #[cfg(not(feature = "__rustls-platform-verifier"))]
+                        return Err(crate::error::builder(
+                            "no TLS root certificates configured, use tls_certs_only()",
+                        ));
                     } else {
                         if config.crls.is_empty() {
                             config_builder.with_root_certificates(crate::tls::rustls_store(
